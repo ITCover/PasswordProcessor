@@ -1,5 +1,7 @@
 # Password Processor
 
+[![Build Status](https://travis-ci.org/ITCover/PasswordProcessor.svg?branch=master)](https://travis-ci.org/ITCover/PasswordProcessor)
+
 ## Examples
 
 ### Initialization
