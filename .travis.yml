@@ -10,4 +10,4 @@ sudo: false
 before_script:
   - sh -c "composer install --dev --no-progress"
 
-script: sh run-tests.sh
+script: vendor/bin/phpunit --no-configuration --coverage-text --whitelist=src/ tests/
