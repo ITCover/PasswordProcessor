@@ -101,7 +101,7 @@ $passwordProcessor = new Processor($dao);
 // $passwordProcessor = new \ITCover\PasswordProcessor\Processor($dao);
 
 // Creating a password for a new user:
-$passwordHash = $passwordProcessor->createPassword($passwordInput);
+$passwordHash = $passwordProcessor->hashPassword($passwordInput);
 
 // Updating a user's password:
 $passwordProcessor->updatePassword($username, $password);
