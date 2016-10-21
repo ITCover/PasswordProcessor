@@ -112,7 +112,7 @@ class ProcessorTest extends TestCase
      * @dataProvider    createPasswords
      * @uses            \ITCover\PasswordProcessor\Processor::__construct
      */
-    public function testCreatePassword($input, $isValid = false)
+    public function testHashPassword($input, $isValid = false)
     {
         $daoStub      = $this->createMock(DAOInterface::class);
         $testSubject  = new Processor($daoStub);
@@ -120,7 +120,7 @@ class ProcessorTest extends TestCase
         if ($isValid === true) {
             $this->assertRegExp(
                 '#\A'.self::HASH_REGEXP.'\z#',
-                $testSubject->createPassword('dummyPassword'),
+                $testSubject->hashPassword('dummyPassword'),
                 "Ouput doesn't appear to be a valid bcrypt hash"
             );
 
@@ -128,14 +128,14 @@ class ProcessorTest extends TestCase
         }
 
         $this->expectException('InvalidArgumentException');
-        $testSubject->createPassword($input);
+        $testSubject->hashPassword($input);
     }
 
     public function createPasswords()
     {
         return [
             // A valid, regular string password
-            // bool(true) will tell testCreatePassword() to test for valid data
+            // bool(true) will tell testHashPassword() to test for valid data
             ['dummyPassword', true],
 
             /* Everything below is invalid inputs ... */
@@ -154,7 +154,7 @@ class ProcessorTest extends TestCase
     }
 
     /**
-     * @uses    \ITCover\PasswordProcessor\Processor::createPassword
+     * @uses    \ITCover\PasswordProcessor\Processor::hashPassword
      */
     public function testUpdatePassword()
     {

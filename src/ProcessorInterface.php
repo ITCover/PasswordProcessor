@@ -14,7 +14,7 @@ namespace ITCover\PasswordProcessor;
 
 interface ProcessorInterface
 {
-    public function createPassword($password);
+    public function hashPassword($password);
     public function updatePassword($identity, $password);
     public function verifyPassword($identity, $password);
 }

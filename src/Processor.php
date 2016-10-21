@@ -60,7 +60,7 @@ class Processor implements ProcessorInterface
      *
      * @return  string  Password hash
      */
-    public function createPassword($password)
+    public function hashPassword($password)
     {
         if (empty($password) || ! \is_string($password)) {
             throw new \InvalidArgumentException("Input password must be a non-empty string");
@@ -84,7 +84,7 @@ class Processor implements ProcessorInterface
      *
      * @api
      *
-     * @uses    \ITCover\PasswordProcessor\Processor::createPassword()
+     * @uses    \ITCover\PasswordProcessor\Processor::hashPassword()
      * @uses    \ITCover\PasswordProcessor\Processor::$dao
      *
      * @param   mixed   $identity   User identifier to set the password for
@@ -98,7 +98,7 @@ class Processor implements ProcessorInterface
     {
         $this->dao->setPasswordHashForIdentity(
             $identity,
-            $this->createPassword($password)
+            $this->hashPassword($password)
         );
     }
 
