@@ -24,6 +24,21 @@ password hashing algorithms to a modern one.
           ACL library! It will only ever deal with creating, verifying and
           updating password hashes.*
 
+### Motivation
+
+PHP's [password extension](https://secure.php.net/password) is really great,
+but it is also still "just" a language primitive - it provides the tools,
+not the complete solution. As it should be.
+
+This library is that complete solution.
+
+It is designed to hook into your application, not the other way around,
+so you don't need to worry about how to abstract it.
+It offers a seamless way to migrate from *any* legacy hashing algorithm,
+so you don't have to think about that either.
+It is opinionated and intentionally leaves out any custom options, so
+there's only one way to use it, no unsafe choices.
+
 ## Installation
 
 PHP 5.6 or newer is required. The latest stable version of PHP is always recommended.
@@ -95,6 +110,11 @@ $dao = new UsersDAO($pdo);
 $passwordProcessor = new Processor($dao);
 ```
 
+Obviously, your application logic would be a little more complex than that,
+and we're only using [PDO](https://secure.php.net/pdo) as an example here,
+but all you really need to use the `Processor` class is an object
+implementing our `DAOInterface`.
+
 ### Usage
 
 ```php
@@ -119,6 +139,8 @@ else
 ```
 
 ### Upgrading from a legacy hash function
+
+Simply pass your old hash function as a callable to the constructor:
 
 ```php
 $passwordProcessor = new Processor($dao, function($inputPassword) use ($salt) {
