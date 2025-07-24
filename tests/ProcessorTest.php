@@ -118,7 +118,7 @@ class ProcessorTest extends TestCase
         $testSubject  = new Processor($daoStub);
 
         if ($isValid === true) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '#\A'.self::HASH_REGEXP.'\z#',
                 $testSubject->hashPassword('dummyPassword'),
                 "Ouput doesn't appear to be a valid bcrypt hash"
@@ -173,7 +173,7 @@ class ProcessorTest extends TestCase
 
         $testSubject = new Processor($dao);
         $testSubject->updatePassword($identity, $password);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#\A'.$identity.':'.self::HASH_REGEXP.'\z#',
             $reference,
             DAOInterface::class.'::'.$daoMethod.'() doesn\'t appear to be called'
@@ -242,7 +242,7 @@ class ProcessorTest extends TestCase
 
         // Correct usernames & passwords, using "old" bcrypt with a cost of 10, should trigger a re-hash
         $this->assertTrue($yesLegacy->verifyPassword('bcryptOld', 'dummyPassword'));
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#\AbcryptOld:'.self::HASH_REGEXP.'\z#',
             $setReference,
             DAOInterface::class.'::'.$daoSetMethod.'() doesn\'t appear to be called'
@@ -250,7 +250,7 @@ class ProcessorTest extends TestCase
         $this->assertFalse(strpos($setReference, $identities['bcryptOld']));
 
         $this->assertTrue($noLegacy->verifyPassword('bcryptOld', 'dummyPassword'));
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#\AbcryptOld:'.self::HASH_REGEXP.'\z#',
             $setReference,
             DAOInterface::class.'::'.$daoSetMethod.'() doesn\'t appear to be called'
@@ -259,7 +259,7 @@ class ProcessorTest extends TestCase
 
         // Correct usernames & passwords, using a legacy hash
         $this->assertTrue($yesLegacy->verifyPassword('legacyMD5', 'dummyPassword'));
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '#\AlegacyMD5:'.self::HASH_REGEXP.'\z#',
             $setReference,
             DAOInterface::class.'::'.$daoSetMethod.'() doesn\'t appear to be called'
