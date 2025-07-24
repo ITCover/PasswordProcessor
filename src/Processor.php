@@ -127,11 +127,12 @@ class Processor implements ProcessorInterface
             return false;
         }
 
-        if (isset($this->legacyHasher) && \password_get_info($existingHash)['algo'] === 0) {
+        if (isset($this->legacyHasher) && (int)\password_get_info($existingHash)['algo'] === 0) {
             $inputHash = \call_user_func($this->legacyHasher, $password);
 
             if (\hash_equals($existingHash, $inputHash)) {
                 $this->updatePassword($identity, $password);
+
                 return true;
             }
         } elseif (\password_verify($password, $existingHash)) {
