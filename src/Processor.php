@@ -127,7 +127,8 @@ class Processor implements ProcessorInterface
             return false;
         }
 
-        if (isset($this->legacyHasher) && (int)\password_get_info($existingHash)['algo'] === 0) {
+        $passwordAlgo = \password_get_info($existingHash)['algo'] ?? 0;
+        if (isset($this->legacyHasher) && $passwordAlgo === 0) {
             $inputHash = \call_user_func($this->legacyHasher, $password);
 
             if (\hash_equals($existingHash, $inputHash)) {
@@ -141,7 +142,7 @@ class Processor implements ProcessorInterface
             }
 
             return true;
-        } elseif (\password_get_info($existingHash)['algo'] === 0) {
+        } elseif ($passwordAlgo === 0) {
             throw new \LogicException("Unknown hashing algorithm encountered without a legacy hasher fallback");
         }
 
