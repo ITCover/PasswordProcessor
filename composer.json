@@ -2,6 +2,7 @@
     "name": "itcover/password-processor",
     "description": "Framework-agnostic password processing library",
     "type": "library",
+    "version": "2.0",
     "keywords": [
         "password", "processor", "hash", "hashing", "bcrypt", "blowfish", "wrapper", "legacy"
     ],
